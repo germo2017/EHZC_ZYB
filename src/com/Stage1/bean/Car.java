@@ -1,7 +1,7 @@
 package com.Stage1.bean;
 import java.util.Date;
 
-public class Car {
+public class Car implements Comparable<Car>{
 	private int carId;
 	private String carModelName;
 	private String carNote;
@@ -10,8 +10,8 @@ public class Car {
 	private String carType;
 	private int carTypeId;
 	private double carLendPrice;
-	private int carIsLendable;
-	private int carPutStatus;
+	private String carIsLendable;//
+	private String carPutStatus;//
 	private String carOrderBy;
 	private String carColor;
 	private double carPrice;
@@ -66,16 +66,16 @@ public class Car {
 	public void setCarLendPrice(double carLendPrice) {
 		this.carLendPrice = carLendPrice;
 	}
-	public int getCarIsLendable() {
+	public String getCarIsLendable() {
 		return carIsLendable;
 	}
-	public void setCarIsLendable(int carIsLendable) {
+	public void setCarIsLendable(String carIsLendable) {
 		this.carIsLendable = carIsLendable;
 	}
-	public int getCarPutStatus() {
+	public String getCarPutStatus() {
 		return carPutStatus;
 	}
-	public void setCarPutStatus(int carPutStatus) {
+	public void setCarPutStatus(String carPutStatus) {
 		this.carPutStatus = carPutStatus;
 	}
 	public String getCarOrderBy() {
@@ -114,7 +114,7 @@ public class Car {
 	}	
 	
 	public Car(int carId, String carModelName, String carNote, String carBrand, int carBrandId, String carType,
-			int carTypeId, double carLendPrice, int carIsLendable, int carPutStatus, String carOrderBy, String carColor,
+			int carTypeId, double carLendPrice, String carIsLendable, String carPutStatus, String carOrderBy, String carColor,
 			double carPrice, String carPlateNum, Date carLendDate) {
 		super();
 		this.carId = carId;
@@ -135,22 +135,37 @@ public class Car {
 	}
 	
 	public String toStringUser() {
-		return carId + "\t" + carModelName+ "\t" +  carNote+ "\t" 
-				+ carBrand +"("+ carBrandId +")"+ "\t" + carType+"(" + carTypeId+")"+ "\t"
-				+  carLendPrice +"/天" + "\t" + carIsLendable;
+		return 	carId + "\t" +
+				carModelName+ "\t" +
+				carNote+ "\t" +
+				carBrand +"("+ carBrandId +")"+ "\t" +
+				carType+"(" + carTypeId+")"+ "\t"+
+				carLendPrice +"/天" + "\t" +
+				carIsLendable;
 	}
 
 
 	public String toStringAdmin() {
-		return "Car [carId=" + carId + ", carModelName=" + carModelName + ", carNote=" + carNote + ", carBrand="
-				+ carBrand + ", carBrandId=" + carBrandId + ", carType=" + carType + ", carTypeId=" + carTypeId
-				+ ", carLendPrice=" + carLendPrice +"/天" + ", carIsLendable=" + carIsLendable + ", carPutStatus" + carPutStatus +  "]";
+		return 	carId + "\t" +
+				carModelName+ "\t" +
+				carNote+ "\t" +
+				carBrand +"("+ carBrandId +")"+ "\t" +
+				carType+"(" + carTypeId+")"+ "\t"+
+				carLendPrice +"/天" + "\t" +
+				carIsLendable + "\t" +
+				carPutStatus;
 	}
 	
 	//测试日期是否已转码
 	@Override
 	public String toString() {
 		return "Car [carId=" + carId + ", carLendDate=" + carLendDate + "]";
+	}
+	
+	//按车租金价格排序的compareTo方法
+	@Override
+	public int compareTo(Car o) {
+		return (int) (this.carLendPrice -o.carLendPrice);
 	}
 	
 	

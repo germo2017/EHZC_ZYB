@@ -1,5 +1,8 @@
 package com.Stage1.view;
 import java.util.Scanner;
+
+import org.pmw.tinylog.Logger;
+
 import com.Stage1.bizImpl.UserBizImpl;
 import com.Stage1.tool.InputTool;
 
@@ -22,16 +25,17 @@ public class LoginView extends View {
 		while(true) {
 			if (ub.userlogin(userAccount, userPwd)) {
 				System.out.println("欢迎"+userAccount);
-				loginCount = 1;
+				Logger.info("用户" + userAccount + "登录成功!");
 				//用户登录功能后,自动进入查询汽车页面，默认查询全部已上架汽车信息并显示
 				//判断用户类型,普通用户进入普通用户操作菜单,管理员进入管理菜单
 				if(ub.getU().getUserType()==2) {
-					new UserView().showView();
+					new UserView().showView(userAccount);//把用户名传进去,用于查看自己的租赁记录
 				}else if(ub.getU().getUserType()==1) {
 					new AdminView().showView();
 				}else {
 					;
 				}
+				loginCount = 1;
 				break;
 			} else if (loginCount<=2 && !ub.userlogin(userAccount, userPwd)){				
 				System.out.println("登录失败,请重新登录,剩余登录次数:"+(3-loginCount));
@@ -42,6 +46,7 @@ public class LoginView extends View {
 				loginCount++;
 				continue;
 			}else if(loginCount==3 && !ub.userlogin(userAccount, userPwd)){
+				Logger.info("用户" + userAccount + "登录失败3次!");
 				System.out.println("登录失败,请注册!");
 				loginCount = 1;
 				//登录三次失败, 跳转到注册页面

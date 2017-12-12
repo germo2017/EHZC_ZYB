@@ -3,6 +3,9 @@ package com.Stage1.view;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import org.pmw.tinylog.Logger;
+
 import com.Stage1.biz.UserBiz;
 import com.Stage1.bizImpl.UserBizImpl;
 import com.Stage1.tool.InputTool;
@@ -53,6 +56,7 @@ public class RegisterView extends View {
 			}
 			if (ub.userRegister(userAccount, userPwd)) {
 				System.out.println("注册成功!");
+				Logger.info("新用户注册成功!");
 				new LoginView().showView();
 				isContinue = false;
 			} else {
